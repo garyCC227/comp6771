@@ -10,10 +10,83 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3353a21b-e29c-42a0-aae7-f6191e4fb73c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/untitled/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/untitled/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/untitled/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/untitled/.idea/untitled.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/untitled/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignments/wl/BUILD" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/wl/BUILD" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assignments/wl/lexicon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/wl/lexicon.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignments/wl/lexicon.h" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/wl/lexicon.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assignments/wl/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/wl/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignments/wl/text.txt" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/wl/text.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assignments/wl/word_ladder.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/wl/word_ladder.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assignments/wl/word_ladder.h" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/wl/word_ladder.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assignments/wl/word_ladder_test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/assignments/wl/word_ladder_test.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/.bazelrc" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771/.bazelrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/.clang-format" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771/.clang-format" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/.idea/comp6771.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/BUILD" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771/BUILD" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/WORKSPACE" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771/WORKSPACE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/assignments/wl/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/assignments/wl/lexicon.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/assignments/wl/lexicon.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/assignments/wl/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/assignments/wl/reference_solution" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/assignments/wl/reference_solution_osx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/assignments/wl/text.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/assignments/wl/word_ladder.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/assignments/wl/word_ladder.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/assignments/wl/word_ladder_test.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/assignments/wl/words.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/catch.h" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771/catch.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/cpplint.py" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771/cpplint.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/data/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/data/words.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/gen_compile_commands.sh" beforeDir="false" afterPath="$PROJECT_DIR$/bazel-comp6771/gen_compile_commands.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week1/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week1/factorial.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week1/factorial.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week1/factorial_main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week1/factorial_test.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week1/helloworld.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week2/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week2/back_insert_iterator.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week2/istream_iterator.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week2/ostream_iterator.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week2/string_view.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week2/string_view.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week2/string_view_test.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week3/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week3/bookstore.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week3/bookstore.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/lectures/week3/bookstore_main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/third_party/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/third_party/catch.hpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week1/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week1/addnumbers.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week1/cat.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week1/sort3.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week1/tut.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week2/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week2/dictionary.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week2/dictionary_library.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week2/dictionary_library.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week2/dictionary_library_test.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week2/tut.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week3/BUILD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week3/car.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week3/car.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bazel-comp6771/tutorials/week3/car_main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tutorials/week3/car.h" beforeDir="false" afterPath="$PROJECT_DIR$/tutorials/week3/car.h" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,7 +126,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assignments/wl/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="32">
               <caret line="2" selection-start-line="2" selection-end-line="4" />
             </state>
           </provider>
@@ -62,7 +135,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assignments/wl/word_ladder.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="128">
               <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
             </state>
           </provider>
@@ -71,7 +144,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assignments/wl/BUILD">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="128">
               <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
             </state>
           </provider>
@@ -117,11 +190,13 @@
     <option name="width" value="1853" />
     <option name="height" value="1055" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -129,25 +204,14 @@
               <item name="comp6771" type="b2602c69:ProjectViewProjectNode" />
               <item name="comp6771" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="comp6771" type="b2602c69:ProjectViewProjectNode" />
-              <item name="comp6771" type="462c0819:PsiDirectoryNode" />
-              <item name="assignments" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="comp6771" type="b2602c69:ProjectViewProjectNode" />
-              <item name="comp6771" type="462c0819:PsiDirectoryNode" />
-              <item name="assignments" type="462c0819:PsiDirectoryNode" />
-              <item name="wl" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
     <property name="cf.advertisement.text.has.clang-format" value="true" />
@@ -273,16 +337,17 @@
       <workItem from="1559912893665" duration="3000" />
       <workItem from="1560395719585" duration="177000" />
       <workItem from="1560395950772" duration="184000" />
+      <workItem from="1561356407919" duration="5000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3034000" />
+    <option name="totallyTimeSpent" value="3039000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19756502" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19977863" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -314,21 +379,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/assignments/wl/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="32">
           <caret line="2" selection-start-line="2" selection-end-line="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assignments/wl/word_ladder.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="128">
           <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assignments/wl/BUILD">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="128">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
         </state>
       </provider>

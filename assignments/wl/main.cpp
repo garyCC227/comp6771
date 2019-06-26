@@ -44,57 +44,51 @@
  *
  */
 
-
+#include <algorithm>
 #include <iostream>
+#include <string>
 
 #include "assignments/wl/lexicon.h"
 #include "assignments/wl/word_ladder.h"
 
-
-
 int main() {
+  auto lexicon = GetLexicon("assignments/wl/words.txt");
 
-    auto lexicon = GetLexicon("assignments/wl/words.txt");
+  std::string s_word, d_word;  // start word, destination word
 
-    std::string s_word, d_word; // start word, destination word
+  // get start word and dest word
+  std::cout << "Enter start word (RETURN to quit): ";
+  getline(std::cin, s_word);
+  if (s_word == "")
+    return 0;  // quit if enter return or no a valid word
 
-    //get start word and dest word
-    std::cout << "Enter start word (RETURN to quit): ";
-    getline(std::cin, s_word);
-    if(s_word=="") return 0;//quit if enter return
-
-    std::cout << "Enter destination word: ";
-    getline(std::cin, d_word);
-    if(d_word =="") return 0;
-
-    if(s_word.size() != d_word.size()) return 0;
-
-    std::cout<<'\n';
-
-    auto lexicon2 = Dictionary(lexicon, s_word);
-
-
-    // algorithm starting running
-    auto results = BFS2(s_word, d_word, lexicon2);
-
-    //print solutions
-    if(!results.empty()) {
-        std::cout << "Found ladder: ";
-        std::sort(results.begin(),results.end(), ResultsCompare());
-
-        for (const auto& path : results) {
-            for (const auto& path_word : path) {
-                std::cout << path_word.first << " ";
-            }
-            std::cout << '\n';
-        }
-    }else{
-        std::cout << "No ladder found.\n";
-    }
-
-
-
+  std::cout << "Enter destination word: ";
+  getline(std::cin, d_word);
+  if (d_word == "")
     return 0;
+
+  if (s_word.size() != d_word.size())
+    return 0;
+
+  auto lexicon2 = Dictionary(lexicon, s_word);
+
+  // algorithm starting running
+  auto results = BFS2(s_word, d_word, lexicon2);
+
+  // print solutions
+  if (!results.empty()) {
+    std::cout << "Found ladder: ";
+    std::sort(results.begin(), results.end(), ResultsCompare());
+
+    for (const auto& path : results) {
+      for (const auto& path_word : path) {
+        std::cout << path_word.first << " ";
+      }
+      std::cout << '\n';
+    }
+  } else {
+    std::cout << "No ladder found.\n";
+  }
+
+  return 0;
 }
-
-

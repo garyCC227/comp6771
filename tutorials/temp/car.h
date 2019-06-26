@@ -1,11 +1,13 @@
-#ifndef TUTORIALS_WEEK3_CAR_H_
-#define TUTORIALS_WEEK3_CAR_H_
+#ifndef TUTORIALS_TEMP_CAR_H_
+#define TUTORIALS_TEMP_CAR_H_
 
 #include <string>
 
 class Car {
  public:
-    Car(){};
+    Car(){}
+    const std::string& getManufacturer() const;
+    int getNumSeats() const;
   Car(std::string, int num);
 //    virtual ~Car() noexcept;
     //copy constructor
@@ -25,4 +27,4 @@ class Car {
   int num_seats_;
 };
 
-#endif  // TUTORIALS_WEEK3_CAR_H_
+#endif  // TUTORIALS_TEMP_CAR_H_

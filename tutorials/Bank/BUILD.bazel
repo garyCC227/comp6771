@@ -1,0 +1,14 @@
+cc_library(
+    name = "bank",
+    srcs = ["bank.cpp"],
+    hdrs = ["bank.h"],
+    deps = [],
+)
+
+cc_binary(
+    name = "bank_main",
+    srcs = ["ban_main.cpp"],
+    deps = [
+        ":bank",
+    ],
+)

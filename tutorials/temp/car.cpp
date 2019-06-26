@@ -1,4 +1,4 @@
-#include "tutorials/week3/car.h"
+#include "tutorials/temp/car.h"
 
 #include <iostream>
 // TODO(tutorial): fill me in
@@ -43,4 +43,10 @@ Car& Car::operator=(Car&& old_car) noexcept{
     old_car.num_seats_ = 0;
 
     return *this;
+}
+const std::string& Car::getManufacturer() const {
+    return manufacturer_;
+}
+int Car::getNumSeats() const {
+    return num_seats_;
 }
