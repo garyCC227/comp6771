@@ -7,6 +7,7 @@ Car::Car(std::string input, int num):manufacturer_{input},num_seats_{num} {
 
 }
 Car::Car(const Car& old_car) :manufacturer_{old_car.manufacturer_}, num_seats_{old_car.num_seats_}{
+    //dsa
     std::cout << "I am copy constructor\n";
 }
 Car& Car::operator=(const Car& old_car) {
