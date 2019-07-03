@@ -6,7 +6,7 @@
 int main() {
   Car one;
   Car two{"Toyota", 5};
-
+  Car three = two;
   //Car three{two};
 
   Car four = std::move(one);
