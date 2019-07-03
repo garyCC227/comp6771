@@ -762,4 +762,155 @@ SCENARIO("Testing - operator"){
 
 /*
  * 22. Test : * operator -> for dot product of two vector
+ *  1. dimension not match
+ *  2. one of the dimension with all magnitudes are 0
+ *  3. one of the vector is identity vector
+ *  4. two normal vector with no decimal magnitudes
+ *  5. two normal vectors with decimal value magnitudes
  */
+SCENARIO("Testing * operator(dot product)"){
+    GIVEN("a list of test cases"){
+        WHEN("two vectors have different dimension"){
+            EuclideanVector v1{5,5.5};
+            EuclideanVector v2{6, 5};
+
+            REQUIRE_THROWS_WITH(v1*v2, "Dimensions of LHS(5) and RHS(6) do not match");
+        }
+
+        WHEN("one of the vector have magnitudes are all 0, dot product = 0"){
+            EuclideanVector v1{5, 5.5};
+            EuclideanVector v2{5};
+
+            REQUIRE( (v1 * v2) == 0);
+        }
+
+        WHEN("one of the vector is identity vector"){
+            EuclideanVector v1{5, 5.5};
+            EuclideanVector identity{5, 1};
+
+            //so v1 * identity = sum of v1's magnitudes
+            double sum = 5 * 5.5;
+            REQUIRE(sum == (v1 * identity));
+        }
+
+        WHEN("vector both have no decimal magnitudes"){
+            std::vector<double> temp1{1,2,3,4};
+            std::vector<double> temp2{2,3,4,5};
+            EuclideanVector v1{temp1.begin(), temp1.end()};
+            EuclideanVector v2{temp2.begin(), temp2.end()};
+
+            double correct_solution = 1*2 + 2*3 + 3*4 + 4*5;
+            REQUIRE(correct_solution == (v1*v2));
+        }
+
+        WHEN("vector both have decimal magnitudes"){
+            EuclideanVector v1{4, 3.2};
+            EuclideanVector v2{4, 1.5};
+
+            double correct_solution = 4 * (3.2 * 1.5);
+            REQUIRE(correct_solution == (v1 * v2));
+        }
+
+    }
+}
+
+/*
+ * 23. Testing * operator
+ *  1. int
+ *  2. double
+ *  3. 0
+ */
+SCENARIO("Testing * operator"){
+    GIVEN("given a vector"){
+        std::vector<double> temp{1,2,3,4,5};
+        EuclideanVector  vec{temp.begin(), temp.end()};
+
+        WHEN("* int"){
+            auto new_vec = vec * 2;
+            std::vector<double> temp2{2,4,6,8,10};
+            EuclideanVector correct_vec{temp2.begin(), temp2.end()};
+
+            REQUIRE(correct_vec == new_vec);
+        }
+
+        WHEN("* double"){
+            auto new_vec = vec* 0.5;
+            std::vector<double> temp2{0.5, 1, 1.5, 2, 2.5};
+            EuclideanVector correct_vec{temp2.begin(), temp2.end()};
+
+            REQUIRE(new_vec == correct_vec);
+        }
+
+        WHEN("* 0"){
+            auto new_vec = vec * 0;
+            EuclideanVector correct_vec{5, 0};
+
+            REQUIRE(correct_vec == new_vec);
+        }
+    }
+}
+
+/*
+ * 24. Test: divide / operator
+ *  1. 0
+ *  2. int
+ *  3. double
+ */
+SCENARIO("Testing / operator"){
+    GIVEN("given a vector"){
+        std::vector<double> temp{2,4,6,8,10};
+        EuclideanVector  vec{temp.begin(), temp.end()};
+
+        WHEN("/ int"){
+            auto new_vec = vec / 2;
+            std::vector<double> temp2{1,2,3,4,5};
+            EuclideanVector correct_vec{temp2.begin(), temp2.end()};
+
+            REQUIRE(correct_vec == new_vec);
+        }
+
+        WHEN("/ double"){
+            auto new_vec = vec / 2.5;
+            std::vector<double> temp2{0.8, 1.6, 2.4, 3.2, 4.0};
+            EuclideanVector correct_vec{temp2.begin(), temp2.end()};
+
+            REQUIRE(new_vec == correct_vec);
+        }
+
+        WHEN("/ 0"){
+            REQUIRE_THROWS_WITH(vec / 0, "Invalid vector division by 0");
+        }
+    }
+}
+
+/*
+ * 25. Test << operator
+ *  -   check output format
+ */
+SCENARIO("Testing << operator"){
+    GIVEN("a list of test cases"){
+        WHEN("0-dimension vector"){
+            EuclideanVector empty{0};
+            std::ostringstream os;
+
+            os << empty;
+
+            std::ostringstream correct;
+            correct << "[]";
+
+            REQUIRE(os.str() == correct.str());
+        }
+
+        WHEN("normal vector"){
+            EuclideanVector v1{4, 5.5};
+            std::ostringstream os;
+
+            os << v1;
+
+            std::ostringstream correct;
+            correct << "[5.5 5.5 5.5 5.5]";
+
+            REQUIRE(os.str() == correct.str());
+        }
+    }
+}
