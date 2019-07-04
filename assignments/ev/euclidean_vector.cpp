@@ -45,16 +45,16 @@ EuclideanVector::EuclideanVector(EuclideanVector&& old) noexcept
 EuclideanVector& EuclideanVector::operator=(const EuclideanVector& old) {
   //    std::cout << "copy assignment there\n";
   // avoid self assignment
-  if (&old != this){
-      if(this->dimension_ != old.dimension_) {
-          this->dimension_ = old.dimension_;
-          this->magnitudes_ = std::make_unique<double[]>(dimension_);  // free before assignment
-      }
+  if (&old != this) {
+    if (this->dimension_ != old.dimension_) {
+      this->dimension_ = old.dimension_;
+      this->magnitudes_ = std::make_unique<double[]>(dimension_);  // free before assignment
+    }
 
-      // copy the content of old
-      for (int i = 0; i < dimension_; ++i) {
-          this->magnitudes_[i] = old.magnitudes_[i];
-      }
+    // copy the content of old
+    for (int i = 0; i < dimension_; ++i) {
+      this->magnitudes_[i] = old.magnitudes_[i];
+    }
   }
 
   return *this;
@@ -88,10 +88,9 @@ int EuclideanVector::GetNumDimensions() const {
 
 EuclideanVector& EuclideanVector::operator+=(const EuclideanVector& v) {
   if (v.GetNumDimensions() != this->GetNumDimensions()) {
-      std::stringstream err;
-      err << "Dimensions of LHS(" << this->GetNumDimensions()
-             <<") and RHS(" << v.GetNumDimensions()
-             << ") do not match";
+    std::stringstream err;
+    err << "Dimensions of LHS(" << this->GetNumDimensions() << ") and RHS(" << v.GetNumDimensions()
+        << ") do not match";
     throw EuclideanVectorError{err.str()};
   }
 
@@ -103,11 +102,10 @@ EuclideanVector& EuclideanVector::operator+=(const EuclideanVector& v) {
 }
 EuclideanVector& EuclideanVector::operator-=(const EuclideanVector& v) {
   if (v.GetNumDimensions() != this->GetNumDimensions()) {
-      std::stringstream err;
-      err << "Dimensions of LHS(" << this->GetNumDimensions()
-          <<") and RHS(" << v.GetNumDimensions()
-          << ") do not match";
-      throw EuclideanVectorError{err.str()};
+    std::stringstream err;
+    err << "Dimensions of LHS(" << this->GetNumDimensions() << ") and RHS(" << v.GetNumDimensions()
+        << ") do not match";
+    throw EuclideanVectorError{err.str()};
   }
 
   for (int i = 0; i < dimension_; ++i) {
@@ -158,8 +156,8 @@ EuclideanVector::operator std::list<double>() {
 
 double EuclideanVector::at(int i) const {
   if (i < 0 || i >= dimension_) {
-      std::stringstream err;
-      err << "Index "<< i << " is not valid for this EuclideanVector object";
+    std::stringstream err;
+    err << "Index " << i << " is not valid for this EuclideanVector object";
     throw EuclideanVectorError{err.str()};
   }
 
@@ -228,11 +226,10 @@ bool operator!=(const EuclideanVector& v1, const EuclideanVector& v2) {
 
 EuclideanVector operator+(const EuclideanVector& v1, const EuclideanVector& v2) {
   if (v1.dimension_ != v2.dimension_) {
-      std::stringstream err;
-      err << "Dimensions of LHS(" << v1.GetNumDimensions()
-          <<") and RHS(" << v2.GetNumDimensions()
-          << ") do not match";
-      throw EuclideanVectorError{err.str()};
+    std::stringstream err;
+    err << "Dimensions of LHS(" << v1.GetNumDimensions() << ") and RHS(" << v2.GetNumDimensions()
+        << ") do not match";
+    throw EuclideanVectorError{err.str()};
   }
 
   EuclideanVector result{v1};
@@ -243,11 +240,10 @@ EuclideanVector operator+(const EuclideanVector& v1, const EuclideanVector& v2) 
 
 EuclideanVector operator-(const EuclideanVector& v1, const EuclideanVector& v2) {
   if (v1.dimension_ != v2.dimension_) {
-      std::stringstream err;
-      err << "Dimensions of LHS(" << v1.GetNumDimensions()
-          <<") and RHS(" << v2.GetNumDimensions()
-          << ") do not match";
-      throw EuclideanVectorError{err.str()};
+    std::stringstream err;
+    err << "Dimensions of LHS(" << v1.GetNumDimensions() << ") and RHS(" << v2.GetNumDimensions()
+        << ") do not match";
+    throw EuclideanVectorError{err.str()};
   }
 
   EuclideanVector result{v1};
@@ -258,11 +254,10 @@ EuclideanVector operator-(const EuclideanVector& v1, const EuclideanVector& v2) 
 
 double operator*(const EuclideanVector& v1, const EuclideanVector& v2) {
   if (v1.dimension_ != v2.dimension_) {
-      std::stringstream err;
-      err << "Dimensions of LHS(" << v1.GetNumDimensions()
-          <<") and RHS(" << v2.GetNumDimensions()
-          << ") do not match";
-      throw EuclideanVectorError{err.str()};
+    std::stringstream err;
+    err << "Dimensions of LHS(" << v1.GetNumDimensions() << ") and RHS(" << v2.GetNumDimensions()
+        << ") do not match";
+    throw EuclideanVectorError{err.str()};
   }
 
   double dot_product = 0;

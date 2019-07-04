@@ -1,15 +1,15 @@
 #ifndef ASSIGNMENTS_EV_EUCLIDEAN_VECTOR_H_
 #define ASSIGNMENTS_EV_EUCLIDEAN_VECTOR_H_
 
+#include <cassert>
 #include <cmath>
 #include <exception>
 #include <list>
 #include <memory>
-#include <string>
-#include <vector>
-#include <cassert>
-#include <utility>
 #include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 class EuclideanVectorError : public std::exception {
  public:
