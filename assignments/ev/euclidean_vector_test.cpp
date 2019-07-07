@@ -16,6 +16,11 @@
     output with the expected output. Finally, if all match, we could say all my functions work
  properly.
 
+    - for const vector:
+        we will test for any const vector will have valid const memeber function to call.
+        but some of methods both have setter and getter, then I will only test for getter,
+        since Clion will tell us setter cannot be use, since we have const vector object.
+
  -------------------------------------------------------------------------------------------
                         Table of Content For Each Test Case
                     (To see detail, go the corresponding test case section)
@@ -30,7 +35,7 @@
  ============================================================================================
  16.GetNumDimensions()         20. != operator                              24. / operator
  17.GetEuclideanNorm()         21. + operator                               25. << operator
- 18.CreateUnitVector()         22. - operator
+ 18.CreateUnitVector()         22. - operator                               26. const vector
  19. == operator               23. * operator
 */
 
@@ -43,21 +48,23 @@
  *  check dimension and magnitudes
  */
 SCENARIO("Testing default constructor") {
-  GIVEN("We will initialized all the possible way to use the default constructor") {
-    WHEN("EuclidenVector a, dimension = 1, magnitudes[0] is 0") {
+  GIVEN("We will initialized a vector by all the possible ways by using the default constructor") {
+    WHEN("when `EuclidenVector vec` -> then dimension should be 1, magnitudes[0] is 0") {
       EuclideanVector vec;
       REQUIRE(vec.GetNumDimensions() == 1);
       REQUIRE(vec[0] == 0);
     }
 
-    WHEN("dimension is 0, dimension = 0, throw for maginitudes[0]") {
+    WHEN("when we initialized a 0-dimension vector -> dimension should be 0, throw for "
+         "maginitudes[0]") {
       EuclideanVector vec{0};
       REQUIRE(vec.GetNumDimensions() == 0);
       // if index 0 is not valid, we can say the whole vector is empty
       REQUIRE_THROWS_WITH(vec.at(0), "Index 0 is not valid for this EuclideanVector object");
     }
 
-    WHEN("dimension is some positive int, such d = 10") {
+    WHEN("when initialized with some positive int, such d = 10 -> dimension = 10 and magnitudes "
+         "are all 0") {
       EuclideanVector vec{10};
       REQUIRE(vec.GetNumDimensions() == 10);
       for (int i = 0; i < 10; ++i) {
@@ -65,7 +72,8 @@ SCENARIO("Testing default constructor") {
       }
     }
 
-    WHEN("variable is int type, d = 5") {
+    WHEN("when we initialized with some int type variable instead of numeric value, we should get "
+         "the same result") {
       int d{5};
       EuclideanVector vec{d};
 
@@ -82,15 +90,17 @@ SCENARIO("Testing default constructor") {
  *  -  check dimension and magnitudes
  */
 SCENARIO("Testing constructor(d = int, m = double)") {
-  GIVEN("all possible test cases") {
-    WHEN("d = 0,  m is any numbers") {
+  GIVEN("Given all possible test cases") {
+    WHEN("when we initialized for a 0-dimension vector -> dimension = 0, magnitudes cannot "
+         "access(throw)") {
       EuclideanVector vec{0, 5.5};
       REQUIRE(vec.GetNumDimensions() == 0);
       // if index 0 is not valid, we can say the whole vector is empty
       REQUIRE_THROWS_WITH(vec.at(0), "Index 0 is not valid for this EuclideanVector object");
     }
 
-    WHEN("d = 5(any positive int), m = 5.5(any double number)") {
+    WHEN("(Normal case) when we initialized with d = any positive value, m = any double value -> "
+         "check with expected output") {
       EuclideanVector vec{5, 5.5};
       REQUIRE(vec.GetNumDimensions() == 5);
       for (int i = 0; i < 5; ++i) {
@@ -98,7 +108,8 @@ SCENARIO("Testing constructor(d = int, m = double)") {
       }
     }
 
-    WHEN("variables has int and double type") {
+    WHEN("when we initialized with variables, d = int type variable, m = double type variable -> "
+         "check with expected output ") {
       int d{5};
       double m{5.5};
       EuclideanVector vec{d, m};
@@ -115,8 +126,9 @@ SCENARIO("Testing constructor(d = int, m = double)") {
  *  -   check dimension and magnitudes
  */
 SCENARIO("Testing range constructor") {
-  GIVEN("all possible test cases for this constructor") {
-    WHEN("empty vector, then we should have d = 0") {
+  GIVEN("Given all possible test cases for this constructor") {
+    WHEN("when we initialized with a empty std::vector -> we should get a 0-dimension Euclidean "
+         "vector") {
       std::vector<double> temp;
       EuclideanVector vec{temp.begin(), temp.end()};
 
@@ -125,8 +137,20 @@ SCENARIO("Testing range constructor") {
       REQUIRE_THROWS_WITH(vec.at(0), "Index 0 is not valid for this EuclideanVector object");
     }
 
-    WHEN("normal vector is given") {
+    WHEN("(Normal case) initialized with some normal vector -> dimension = std::vector.size(), "
+         "magnitudes should be same as the std::vector value") {
       std::vector<double> temp{1, 2, 3, 4, 5, 6};
+      EuclideanVector vec{temp.begin(), temp.end()};
+
+      REQUIRE(vec.GetNumDimensions() == static_cast<int>(temp.size()));
+      for (int i = 0; i < vec.GetNumDimensions(); ++i) {
+        REQUIRE(vec[i] == temp[i]);
+      }
+    }
+
+    WHEN("(Normal case) initialized with some normal vector -> dimension = std::vector.size(), "
+         "magnitudes should be same as the std::vector value") {
+      std::vector<double> temp{-1, -2, -3, -4, -5, 6};
       EuclideanVector vec{temp.begin(), temp.end()};
 
       REQUIRE(vec.GetNumDimensions() == static_cast<int>(temp.size()));
@@ -145,7 +169,7 @@ SCENARIO("Testing copy constructor") {
   GIVEN("Given a old_vec") {
     EuclideanVector vec{5, 0.5};
 
-    WHEN("copy old_vec to a new one, check d/m of the new one, and the old one") {
+    WHEN("we copy from the old_vec, we need to check if old == new??") {
       EuclideanVector new_vec{vec};
       REQUIRE(vec == new_vec);
     }
@@ -161,9 +185,12 @@ SCENARIO("Testing move constructor") {
     EuclideanVector old_vec{5, 5.5};
     EuclideanVector copy_old_vec{old_vec};
 
-    WHEN("using move constructor to create a new one") {
+    WHEN("so we move old_vec to the new one -> check if new_one == the copy of old_one? and check "
+         "did we set old_one to nothing?(0-dimesnion vector)") {
       EuclideanVector new_vec{std::move(old_vec)};
       REQUIRE(new_vec == copy_old_vec);
+
+      // so we will set the old one to a 0-dimension vector
       // check old vector to default or not?
       REQUIRE(old_vec.GetNumDimensions() == 0);
       // if index 0 is not valid, we can say the whole vector is empty
@@ -180,15 +207,18 @@ SCENARIO("Testing copy assignment") {
   GIVEN("Given a old vector") {
     EuclideanVector old_vec{5, 5.5};
 
-    WHEN("self copy-> to test if that works") { REQUIRE_NOTHROW(old_vec = old_vec); }
+    WHEN("when we do self copy -> we just want to check if that works?") {
+      REQUIRE_NOTHROW(old_vec = old_vec);
+    }
 
-    WHEN("copy with old_vec ") {
+    WHEN("copy assign with two different dimensions vectors -> we care the dimension and "
+         "magnitudes of new_vec before and after assignment") {
       EuclideanVector new_vec{1, 4.0};
-      REQUIRE(new_vec.GetNumDimensions() == 1);
+      REQUIRE(new_vec.GetNumDimensions() == 1);  // check d and m before assignment
       REQUIRE(new_vec[0] == 4);
 
       new_vec = old_vec;
-      REQUIRE(new_vec.GetNumDimensions() == 5);
+      REQUIRE(new_vec.GetNumDimensions() == 5);  // check d and m after assignment
       REQUIRE(new_vec == old_vec);
     }
   }
@@ -204,7 +234,8 @@ SCENARIO("Testing move assignment") {
 
     WHEN("check if self assignment works") { REQUIRE_NOTHROW(old_vec = old_vec); }
 
-    WHEN("move assignement to a new vector") {
+    WHEN("move assignment with two different dimensions vectors -> check both dimensions and "
+         "magnitudes as expected?") {
       EuclideanVector new_vec{1, 4.0};
       REQUIRE(new_vec.GetNumDimensions() == 1);
       REQUIRE(new_vec[0] == 4);
@@ -228,12 +259,11 @@ SCENARIO("Testing move assignment") {
  *      1. initialized
  *      2. reassign by another vector
  *      3. (things didnt do: not-valid index)
- *          since we use `assert` instead of throw. and also normally subscript operator did not
- *          handle for invalid index error message.
+ *          since we use `assert` instead of throw.
  */
 SCENARIO("Testing subscript operator") {
-  GIVEN("a list of sub-test cases ") {
-    WHEN("use getter and setter after initialized a vector") {
+  GIVEN("Given a list of sub-test cases ") {
+    WHEN("check -> Does getter and setter works after initialized a vector?") {
       EuclideanVector vec{5};
       // test getter
       for (int i = 0; i < 5; ++i) {
@@ -249,7 +279,7 @@ SCENARIO("Testing subscript operator") {
       }
     }
 
-    WHEN("use getter and setter after assignment ") {
+    WHEN("check -> Does getter and setter works after assignment ") {
       EuclideanVector vec{5};
       EuclideanVector old_vec{4, 5.5};
       vec = old_vec;
@@ -274,7 +304,7 @@ SCENARIO("Testing subscript operator") {
  * 9. test += operator: test cases
  *  1. dimensions no match
  *  2. normal += operator
- *  3. (Things not do, but CLion will cover it): += not EuclideanVector object
+ *  3. (Things not do, but CLion will cover it): += operation on `not a EuclideanVector object`
  */
 SCENARIO("Testing += operator") {
   GIVEN("a vector to +=") {
@@ -309,18 +339,19 @@ SCENARIO("Testing += operator") {
  * 10. test -= operator
  *      1. dimensions no match
  *      2. normal += operator
- *      3. (Things not do, but CLion will cover it): += not EuclideanVector object
+ *      3. (Things not do, but CLion will cover it): -= operation on `not a EuclideanVector object`
+ *      4. two 0-dimension vectors
  */
 SCENARIO("Testing -= operator") {
   GIVEN("a vector to -=") {
     EuclideanVector vec{5, 5.5};
 
-    WHEN("when dimensions is not match") {
+    WHEN("when two vectors have different dimensions-> throw exception") {
       EuclideanVector bad_vec{4, 4.0};
       REQUIRE_THROWS_WITH(vec -= bad_vec, "Dimensions of LHS(5) and RHS(4) do not match");
     }
 
-    WHEN("normal -= operation") {
+    WHEN("(normal case) -= operation with two normal vectors -> check expected output") {
       std::vector<double> input{1, 2, 3, 4, 5};
       EuclideanVector good_vec{input.begin(), input.end()};
       vec -= good_vec;
@@ -337,6 +368,14 @@ SCENARIO("Testing -= operator") {
         REQUIRE(vec[i] == (5.5 - input[i]));
       }
     }
+
+    WHEN("when -= operation on two 0-dimension vectors -> return a 0-dimension vector") {
+      EuclideanVector v1{0, 5.5};
+      EuclideanVector v2{0};
+
+      // all 0-dimension vector are same, so we just check v1 == output?
+      REQUIRE(v1 == (v1 -= v2));
+    }
   }
 }
 
@@ -345,10 +384,11 @@ SCENARIO("Testing -= operator") {
  *  -   check expected output for input type is(since we have implicit type conversion, so )
  *      1. int
  *      2. double
+ *      3. 0 dimensions vector
  */
 SCENARIO("Testing *= operator") {
-  GIVEN("a list of tests case") {
-    WHEN("input type is int") {
+  GIVEN("Given a list of tests case") {
+    WHEN("when *= with int type value -> check with expected output") {
       int b{2};
       EuclideanVector vec{4, 4.5};
       vec *= b;
@@ -359,7 +399,7 @@ SCENARIO("Testing *= operator") {
       }
     }
 
-    WHEN("input type is double") {
+    WHEN("when *= with double type value -> check with expected output") {
       double b{2.5};
       EuclideanVector vec{4, 4.5};
       vec *= b;
@@ -368,6 +408,13 @@ SCENARIO("Testing *= operator") {
       for (int i = 0; i < 4; ++i) {
         REQUIRE(vec[i] == (4.5 * 2.5));
       }
+    }
+
+    WHEN("0-dimension vector *= any value -> return a 0-dimension vector") {
+      double b{2.5};
+      EuclideanVector v1{0, 4.4};
+
+      REQUIRE(v1 == (v1 *= b));
     }
   }
 }
@@ -378,10 +425,11 @@ SCENARIO("Testing *= operator") {
  *      1. int
  *      2. double
  *      3. input is 0
+ *      4. 0-dimension vector
  */
 SCENARIO("Testing /= operator") {
   GIVEN("a list of tests case") {
-    WHEN("input type is int") {
+    WHEN("when *= with int type value -> check with expected output") {
       int b{2};
       EuclideanVector vec{4, 4.5};
       vec /= b;
@@ -392,7 +440,7 @@ SCENARIO("Testing /= operator") {
       }
     }
 
-    WHEN("input type is double") {
+    WHEN("when *= with double type value -> check with expected output") {
       double b{2.5};
       EuclideanVector vec{4, 4.5};
       vec /= b;
@@ -403,10 +451,15 @@ SCENARIO("Testing /= operator") {
       }
     }
 
-    WHEN("input b == 0 ") {
+    WHEN("when /= with 0 -> throw exception ") {
       double b{0};
       EuclideanVector vec{4, 4.5};
       REQUIRE_THROWS_WITH(vec /= b, "Invalid vector division by 0");
+    }
+
+    WHEN("0-dimension vector /= any value -> return 0-dimension vector") {
+      EuclideanVector v1{0};
+      REQUIRE(v1 == (v1 /= 5.5));
     }
   }
 }
@@ -420,7 +473,7 @@ SCENARIO("Test std::vector<double> type conversion") {
     std::vector<double> correct_vec = {4, 5, 6, 7, 8, 1};
     EuclideanVector vec{correct_vec.begin(), correct_vec.end()};
 
-    WHEN("Euclidean vector to std::vector<double>") {
+    WHEN("Euclidean vector to std::vector<double> -> check with expected output") {
       auto output = static_cast<std::vector<double>>(vec);
       REQUIRE(output == correct_vec);
     }
@@ -437,7 +490,7 @@ SCENARIO("Test std::list<double> type conversion") {
     EuclideanVector vec{6, 4.5};
     REQUIRE(correct_list.size() == 6);
 
-    WHEN("Euclidean vector to std::vector<double>") {
+    WHEN("Euclidean vector to std::list<double> -> check with expected output") {
       auto output = static_cast<std::list<double>>(vec);
       REQUIRE(output == correct_list);
     }
@@ -445,10 +498,11 @@ SCENARIO("Test std::list<double> type conversion") {
 }
 
 /*
- * 14. test at() method.
+ * 14. test at() method. -> both getter and setter
  *      1. invalid index
  *      2. normal index
  *      3. index is double
+ *
  */
 SCENARIO("Test at() method") {
   GIVEN("given a vector ") {
@@ -456,24 +510,42 @@ SCENARIO("Test at() method") {
     EuclideanVector vec{temp.begin(), temp.end()};
     REQUIRE((temp.size() == 4 && vec.GetNumDimensions() == 4));
 
-    WHEN("index is invalid") {
+    WHEN("when index is invalid -> throw exception") {
       int index1{-1};
       int index2{4};
 
+      // for getter
       REQUIRE_THROWS_WITH(vec.at(index1), "Index -1 is not valid for this EuclideanVector object");
       REQUIRE_THROWS_WITH(vec.at(index2), "Index 4 is not valid for this EuclideanVector object");
+      // for setter
+      REQUIRE_THROWS_WITH(vec.at(index1) = 1,
+                          "Index -1 is not valid for this EuclideanVector object");
+      REQUIRE_THROWS_WITH(vec.at(index2) = 2,
+                          "Index 4 is not valid for this EuclideanVector object");
     }
 
-    WHEN("normal index") {
+    WHEN("when valid index -> check with expected value") {
       int index{2};
       REQUIRE(vec.at(index) == 3);
+
+      // test setter
+      EuclideanVector temp1{3};
+      REQUIRE(temp1.at(index) == 0);
+      temp1.at(index) = 2;
+      REQUIRE(temp1.at(index) == 2);
     }
 
-    WHEN("index type is double") {
+    WHEN("when index is a double number -> so vec.at(2.5) == vec.at(2)") {
       double index{2.5};
       // by implicit type conversion double to int in c++
       // should be index 2.5 -> 2. so we are checking vec.at(2)
       REQUIRE(vec.at(index) == 3);
+
+      // test setter
+      EuclideanVector temp1{3};
+      REQUIRE(temp1.at(index) == 0);
+      temp1.at(index) = 2;
+      REQUIRE(temp1.at(index) == 2);
     }
   }
 }
@@ -490,22 +562,23 @@ SCENARIO("Test at() method") {
  *      7. unit vector
  */
 SCENARIO("Test GetNumDimensions() methods") {
-  GIVEN("given a vector ") {
+  GIVEN("we will test if GetNumDimensions() works after all possible way that we change or "
+        "initialized the vector ") {
     EuclideanVector temp_vec{4, 4.0};
 
-    WHEN("7. create auto unit vector") {
+    WHEN("7. create a unit vector") {
       auto unit_vec = temp_vec.CreateUnitVector();
       REQUIRE(unit_vec.GetNumDimensions() == 4);
     }
 
-    WHEN("6.default constructor") {
+    WHEN("6.after using default constructor") {
       EuclideanVector vec{5};
       REQUIRE(vec.GetNumDimensions() == 5);
     }
 
-    WHEN("5.normal constructor") { REQUIRE(temp_vec.GetNumDimensions() == 4); }
+    WHEN("5.after using normal constructor") { REQUIRE(temp_vec.GetNumDimensions() == 4); }
 
-    WHEN("4. move assignment") {
+    WHEN("4.after using move assignment") {
       EuclideanVector dest_vec{5, 5.5};
       EuclideanVector start_vec{4, 5.5};
       REQUIRE(start_vec.GetNumDimensions() == 4);
@@ -525,7 +598,7 @@ SCENARIO("Test GetNumDimensions() methods") {
       REQUIRE(dest_vec.GetNumDimensions() == 0);
     }
 
-    WHEN("2.copy assignment") {
+    WHEN("2.after using copy assignment") {
       EuclideanVector start_vec{1, 5.5};
       REQUIRE(start_vec.GetNumDimensions() == 1);
 
@@ -534,7 +607,7 @@ SCENARIO("Test GetNumDimensions() methods") {
       REQUIRE(temp_vec.GetNumDimensions() == 4);
     }
 
-    WHEN("1. copy constructor") {
+    WHEN("1. after using copy constructor") {
       REQUIRE(temp_vec.GetNumDimensions() == 4);
       EuclideanVector vec{temp_vec};
 
@@ -549,27 +622,27 @@ SCENARIO("Test GetNumDimensions() methods") {
  *  - error case: dimension is 0
  */
 SCENARIO("Test GetEuclideanNorm() ..") {
-  GIVEN("A list of normal value") {
+  GIVEN("A list of `normal value` for some vector") {
     // norm for vector {2,3,5,6}
     double norm1 = sqrt(pow(2, 2) + pow(3, 2) + pow(5, 2) + pow(6, 2));
     // norm for magnitudes is double. for a vector{1.5, 3.5, 4, 4.5}
     double norm2 = sqrt(pow(1.5, 2) + pow(3.5, 2) + pow(4, 2) + pow(4.5, 2));
 
-    WHEN("vector is {2, 3, 4, 5}") {
+    WHEN("vector is {2, 3, 4, 5} -> check with expected output") {
       std::vector<double> v1{2, 3, 5, 6};
       EuclideanVector vec{v1.begin(), v1.end()};
 
       REQUIRE(vec.GetEuclideanNorm() == norm1);
     }
 
-    WHEN("vector is {1.5, 3.5, 4, 4.5}") {
+    WHEN("vector is {1.5, 3.5, 4, 4.5} -> check with expected output") {
       std::vector<double> v2{1.5, 3.5, 4, 4.5};
       EuclideanVector vec{v2.begin(), v2.end()};
 
       REQUIRE(vec.GetEuclideanNorm() == norm2);
     }
 
-    WHEN("dimension is 0") {
+    WHEN("dimension is 0 -> throw exception") {
       EuclideanVector vec{0};
 
       REQUIRE_THROWS_WITH(vec.GetEuclideanNorm(),
@@ -582,20 +655,19 @@ SCENARIO("Test GetEuclideanNorm() ..") {
  * 17.Test: CreateUnitVector()
  * -    error case1: 0 dimension
  * -    error case2: norm is 0
- * -    magnitudes is negative, positive, normal vector -> end up for the normal of those unit
- * vector is 1
+ * -    magnitudes is negative, positive, normal vector -> check if they have normal == 1?
  */
 SCENARIO("Testing UnitVector()") {
-  GIVEN("given the normal of all unit vector, which is 1") {
-    int unit_norm{1};
+  GIVEN("Given the normal of all unit vector, which is 1") {
+    double unit_norm{1};
 
-    WHEN("dimension is 0") {
+    WHEN("when 0-dimension vector -> throw exception") {
       EuclideanVector vec{0};
       REQUIRE_THROWS_WITH(vec.CreateUnitVector(),
                           "EuclideanVector with no dimensions does not have a unit vector");
     }
 
-    WHEN("the normal of original vector is 0, it cant create a unit vector as well") {
+    WHEN("the normal of original vector is 0, it cant create a unit vector -> throw exception") {
       // all magnitudes is 0, so normal will be 0
       EuclideanVector vec{5};
       REQUIRE(vec.GetEuclideanNorm() == 0);
@@ -604,21 +676,24 @@ SCENARIO("Testing UnitVector()") {
                           "EuclideanVector with euclidean normal of 0 does not have a unit vector");
     }
 
-    WHEN("a vector have all the magnitudes is negative") {
+    WHEN("can we create a unit_vector when the vector have negative magnitudes? -> check "
+         "unit_vecotr == 1?") {
       std::vector<double> temp{-1, -2, -3, -4, -5};
       EuclideanVector vec{temp.begin(), temp.end()};
 
       REQUIRE(vec.CreateUnitVector().GetEuclideanNorm() == unit_norm);
     }
 
-    WHEN("a vector have all positive magnitudes") {
+    WHEN("can we create a unit_vector when the vector have positive magnitudes? -> check "
+         "unit_vecotr == 1?") {
       std::vector<double> temp{5, 10, 1.5, 15.5, 13};
       EuclideanVector vec{temp.begin(), temp.end()};
 
       REQUIRE(vec.CreateUnitVector().GetEuclideanNorm() == unit_norm);
     }
 
-    WHEN("vector have positive and negative magnitudes") {
+    WHEN("can we create a unit_vector when the vector have both positive and negative magnitudes? "
+         "-> check unit_vecotr == 1?") {
       std::vector<double> temp{5, 3.5, -2, 5, -4.5};
       EuclideanVector vec{temp.begin(), temp.end()};
 
@@ -635,7 +710,7 @@ SCENARIO("Testing == operator") {
     std::vector<double> temp{2, 3, 4, 5, 6};
     EuclideanVector vec{temp.begin(), temp.end()};
 
-    WHEN("two vector are not the same") {
+    WHEN("When two vector are not the same-> return false") {
       // dimension not the same
       EuclideanVector temp1{2, 5};
       EuclideanVector temp2{0};
@@ -653,7 +728,7 @@ SCENARIO("Testing == operator") {
       REQUIRE_FALSE((vec == temp4 && vec == temp5 && vec == temp6));
     }
 
-    WHEN("two vector are same") {
+    WHEN("when two vector are same -> return true") {
       EuclideanVector same_vec{vec};
 
       REQUIRE(same_vec == vec);
@@ -669,7 +744,7 @@ SCENARIO("Testing != operator") {
     std::vector<double> temp{2, 3, 4, 5, 6};
     EuclideanVector vec{temp.begin(), temp.end()};
 
-    WHEN("two vector are not the same") {
+    WHEN("when two vector are not the same-> return true") {
       // dimension not the same
       EuclideanVector temp1{2, 5};
       EuclideanVector temp2{0};
@@ -687,7 +762,7 @@ SCENARIO("Testing != operator") {
       REQUIRE((vec != temp4 && vec != temp5 && vec != temp6));
     }
 
-    WHEN("two vector are same") {
+    WHEN("when two vector are same -> return false") {
       EuclideanVector same_vec{vec};
 
       REQUIRE_FALSE(same_vec != vec);
@@ -704,28 +779,28 @@ SCENARIO("Testing != operator") {
  */
 SCENARIO("Testing + operator") {
   GIVEN("a list of test cases") {
-    WHEN("dimensions are not same") {
+    WHEN("two vectors have different dimensions -> throw exception") {
       EuclideanVector v1{0, 5};
       EuclideanVector v2{1, 5};
 
       REQUIRE_THROWS_WITH(v1 + v2, "Dimensions of LHS(0) and RHS(1) do not match");
     }
 
-    WHEN("dimension 0 + 0 -> still the vector itself") {
+    WHEN("+operation on two 0-dimension vectors  -> return a 0-dimension vector") {
       EuclideanVector v1{0};
       EuclideanVector v2{0};
 
       REQUIRE(v1 == (v1 + v2));
     }
 
-    WHEN("RHS vector has magnitudes are all 0, LHS is still LHS after +") {
+    WHEN("+ operation on identity vector -> v1+identity == v1") {
       EuclideanVector v1{5, 5.5};
-      EuclideanVector v2{5};
+      EuclideanVector v2{5};  // identity vector : magnitudes are all 0
 
       REQUIRE(v1 == (v1 + v2));
     }
 
-    WHEN("two normal vector +") {
+    WHEN("when + operation on two normal vector -> check with expected output") {
       EuclideanVector v1{5, 5.5};
       EuclideanVector v2{5, 1};
       EuclideanVector v3{5, 6.5};
@@ -744,28 +819,28 @@ SCENARIO("Testing + operator") {
  */
 SCENARIO("Testing - operator") {
   GIVEN("a list of test cases") {
-    WHEN("dimensions are not same") {
+    WHEN("two vectors have different dimensions -> throw exception") {
       EuclideanVector v1{0, 5};
       EuclideanVector v2{1, 5};
 
       REQUIRE_THROWS_WITH(v1 - v2, "Dimensions of LHS(0) and RHS(1) do not match");
     }
 
-    WHEN("dimension 0 - 0 -> still the vector itself") {
+    WHEN("-operation on two 0-dimension vectors  -> return a 0-dimension vector") {
       EuclideanVector v1{0};
       EuclideanVector v2{0};
 
       REQUIRE(v1 == (v1 - v2));
     }
 
-    WHEN("RHS vector has magnitudes are all 0, LHS is still LHS after -") {
+    WHEN("- operation on identity vector -> v1 - identity == v1") {
       EuclideanVector v1{5, 5.5};
-      EuclideanVector v2{5};
+      EuclideanVector v2{5};  // identity vector : magnitudes are all 0
 
       REQUIRE(v1 == (v1 - v2));
     }
 
-    WHEN("two normal vector -") {
+    WHEN("when - operation on two normal vector -> check with expected output") {
       EuclideanVector v1{5, 5.5};
       EuclideanVector v2{5, 1};
       EuclideanVector v3{5, 4.5};
@@ -785,21 +860,21 @@ SCENARIO("Testing - operator") {
  */
 SCENARIO("Testing * operator(dot product)") {
   GIVEN("a list of test cases") {
-    WHEN("two vectors have different dimension") {
+    WHEN("two vectors have different dimension -> throw exception") {
       EuclideanVector v1{5, 5.5};
       EuclideanVector v2{6, 5};
 
       REQUIRE_THROWS_WITH(v1 * v2, "Dimensions of LHS(5) and RHS(6) do not match");
     }
 
-    WHEN("one of the vector have magnitudes are all 0, dot product = 0") {
+    WHEN("one of the vector have magnitudes are all 0 -> dot product = 0") {
       EuclideanVector v1{5, 5.5};
       EuclideanVector v2{5};
 
       REQUIRE((v1 * v2) == 0);
     }
 
-    WHEN("one of the vector is identity vector") {
+    WHEN("one of the vector is identity vector -> result = sum of v1's magnitudes") {
       EuclideanVector v1{5, 5.5};
       EuclideanVector identity{5, 1};
 
@@ -808,7 +883,7 @@ SCENARIO("Testing * operator(dot product)") {
       REQUIRE(sum == (v1 * identity));
     }
 
-    WHEN("vector both have no decimal magnitudes") {
+    WHEN("vector both have no decimal magnitudes -> check with expected output") {
       std::vector<double> temp1{1, 2, 3, 4};
       std::vector<double> temp2{2, 3, 4, 5};
       EuclideanVector v1{temp1.begin(), temp1.end()};
@@ -818,7 +893,7 @@ SCENARIO("Testing * operator(dot product)") {
       REQUIRE(correct_solution == (v1 * v2));
     }
 
-    WHEN("vector both have decimal magnitudes") {
+    WHEN("vector both have decimal magnitudes -> check with expected output") {
       EuclideanVector v1{4, 3.2};
       EuclideanVector v2{4, 1.5};
 
@@ -833,13 +908,14 @@ SCENARIO("Testing * operator(dot product)") {
  *  1. int
  *  2. double
  *  3. 0
+ *  4. 0-dimensions vector
  */
 SCENARIO("Testing * operator") {
   GIVEN("given a vector") {
     std::vector<double> temp{1, 2, 3, 4, 5};
     EuclideanVector vec{temp.begin(), temp.end()};
 
-    WHEN("* int") {
+    WHEN("* int value -> check with expected output") {
       auto new_vec = vec * 2;
       std::vector<double> temp2{2, 4, 6, 8, 10};
       EuclideanVector correct_vec{temp2.begin(), temp2.end()};
@@ -847,7 +923,7 @@ SCENARIO("Testing * operator") {
       REQUIRE(correct_vec == new_vec);
     }
 
-    WHEN("* double") {
+    WHEN("* double value -> check with expected output") {
       auto new_vec = vec * 0.5;
       std::vector<double> temp2{0.5, 1, 1.5, 2, 2.5};
       EuclideanVector correct_vec{temp2.begin(), temp2.end()};
@@ -855,11 +931,16 @@ SCENARIO("Testing * operator") {
       REQUIRE(new_vec == correct_vec);
     }
 
-    WHEN("* 0") {
+    WHEN("* 0 -> return a vector with all magnitudes are 0") {
       auto new_vec = vec * 0;
       EuclideanVector correct_vec{5, 0};
 
       REQUIRE(correct_vec == new_vec);
+    }
+
+    WHEN("* on 0-dimension vector -> return a 0-dimension vector") {
+      EuclideanVector v1{0};
+      REQUIRE((v1 * 5) == v1);
     }
   }
 }
@@ -869,13 +950,14 @@ SCENARIO("Testing * operator") {
  *  1. 0
  *  2. int
  *  3. double
+ *  4. 0-dimension vector
  */
 SCENARIO("Testing / operator") {
   GIVEN("given a vector") {
     std::vector<double> temp{2, 4, 6, 8, 10};
     EuclideanVector vec{temp.begin(), temp.end()};
 
-    WHEN("/ int") {
+    WHEN("/ int value -> check with expected output") {
       auto new_vec = vec / 2;
       std::vector<double> temp2{1, 2, 3, 4, 5};
       EuclideanVector correct_vec{temp2.begin(), temp2.end()};
@@ -883,7 +965,7 @@ SCENARIO("Testing / operator") {
       REQUIRE(correct_vec == new_vec);
     }
 
-    WHEN("/ double") {
+    WHEN("/ double value -> check with expected output") {
       auto new_vec = vec / 2.5;
       std::vector<double> temp2{0.8, 1.6, 2.4, 3.2, 4.0};
       EuclideanVector correct_vec{temp2.begin(), temp2.end()};
@@ -891,7 +973,15 @@ SCENARIO("Testing / operator") {
       REQUIRE(new_vec == correct_vec);
     }
 
-    WHEN("/ 0") { REQUIRE_THROWS_WITH(vec / 0, "Invalid vector division by 0"); }
+    WHEN("/ 0 -> throw auto exception") {
+      REQUIRE_THROWS_WITH(vec / 0, "Invalid vector division by 0");
+    }
+
+    WHEN("/ operation on 0-dimension vector -> return 0-dimension vector") {
+      EuclideanVector v1{0};
+
+      REQUIRE((v1 / 5) == v1);
+    }
   }
 }
 
@@ -923,6 +1013,41 @@ SCENARIO("Testing << operator") {
       correct << "[5.5 5.5 5.5 5.5]";
 
       REQUIRE(os.str() == correct.str());
+    }
+  }
+}
+
+/*
+ * 26. Testing : const vector
+ *      - check all the valid methods work properly
+ *      - (no check invalid method -> since Clion already told us no this methods to use)
+ *          no valid methods:
+ *              +=, -=,
+ */
+SCENARIO("Testing const vector") {
+  GIVEN("A const vector") {
+    const EuclideanVector vec{5, 5.5};
+
+    WHEN("Check subscript getter works?") {
+      REQUIRE(vec[1] == 5.5);  // subscript getter
+    }
+
+    WHEN("check at() getter works?") { REQUIRE(vec.at(1) == 5.5); }
+
+    WHEN("check GetNumDimension() works") { REQUIRE(vec.GetNumDimensions() == 5); }
+
+    WHEN("check GetEuclideanNorm() works") { REQUIRE_NOTHROW(vec.GetEuclideanNorm()); }
+
+    WHEN("check CreateUnitVector() works") { REQUIRE_NOTHROW(vec.CreateUnitVector()); }
+
+    WHEN("check std::vector conversion works?") {
+      std::vector<double> correct{5.5, 5.5, 5.5, 5.5, 5.5};
+      REQUIRE(correct == static_cast<std::vector<double>>(vec));
+    }
+
+    WHEN("check std::list conversion works?") {
+      std::list<double> correct{5.5, 5.5, 5.5, 5.5, 5.5};
+      REQUIRE(correct == static_cast<std::list<double>>(vec));
     }
   }
 }

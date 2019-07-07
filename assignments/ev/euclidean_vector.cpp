@@ -37,10 +37,10 @@ EuclideanVector::EuclideanVector(const EuclideanVector& old)
 }
 
 EuclideanVector::EuclideanVector(EuclideanVector&& old) noexcept
-  : dimension_{std::move(old.dimension_)}, magnitudes_{std::move(old.magnitudes_)} {
+  : dimension_{old.dimension_}, magnitudes_{std::move(old.magnitudes_)} {
   //    std::cout << "move constructor there\n";
   old.dimension_ = 0;
-  old.magnitudes_.reset(nullptr);
+  old.magnitudes_ = std::make_unique<double[]>(0);
 }
 EuclideanVector& EuclideanVector::operator=(const EuclideanVector& old) {
   //    std::cout << "copy assignment there\n";
@@ -67,7 +67,7 @@ EuclideanVector& EuclideanVector::operator=(EuclideanVector&& old) noexcept {
     return *this;
 
   this->dimension_ = std::exchange(old.dimension_, 0);
-  this->magnitudes_ = std::exchange(old.magnitudes_, nullptr);
+  this->magnitudes_ = std::exchange(old.magnitudes_, std::make_unique<double[]>(0));
 
   return *this;
 }
@@ -134,7 +134,7 @@ EuclideanVector& EuclideanVector::operator/=(double b) {
 
   return *this;
 }
-EuclideanVector::operator std::vector<double>() {
+EuclideanVector::operator std::vector<double>() const {
   std::vector<double> vec;
 
   for (int i = 0; i < dimension_; ++i) {
@@ -144,7 +144,7 @@ EuclideanVector::operator std::vector<double>() {
   return vec;
 }
 
-EuclideanVector::operator std::list<double>() {
+EuclideanVector::operator std::list<double>() const {
   std::list<double> l;
 
   for (int i = 0; i < dimension_; ++i) {
@@ -155,6 +155,16 @@ EuclideanVector::operator std::list<double>() {
 }
 
 double EuclideanVector::at(int i) const {
+  if (i < 0 || i >= dimension_) {
+    std::stringstream err;
+    err << "Index " << i << " is not valid for this EuclideanVector object";
+    throw EuclideanVectorError{err.str()};
+  }
+
+  return this->magnitudes_[i];
+}
+
+double& EuclideanVector::at(int i) {
   if (i < 0 || i >= dimension_) {
     std::stringstream err;
     err << "Index " << i << " is not valid for this EuclideanVector object";

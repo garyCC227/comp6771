@@ -23,10 +23,9 @@ class EuclideanVectorError : public std::exception {
 class EuclideanVector {
  public:
   // constructor
-  explicit EuclideanVector(int i = 1);  // TODO(interal requirment problem)
-  explicit EuclideanVector(int, double);
-  explicit EuclideanVector(std::vector<double>::const_iterator,
-                           std::vector<double>::const_iterator);
+  explicit EuclideanVector(int i = 1);
+  EuclideanVector(int, double);
+  EuclideanVector(std::vector<double>::const_iterator, std::vector<double>::const_iterator);
 
   // copy and move constructor and assignment
   EuclideanVector(const EuclideanVector&);
@@ -46,12 +45,13 @@ class EuclideanVector {
   EuclideanVector& operator/=(double);
 
   // type conversion operator
-  explicit operator std::vector<double>();
-  explicit operator std::list<double>();
+  explicit operator std::vector<double>() const;
+  explicit operator std::list<double>() const;
 
   // methods
   int GetNumDimensions() const;
   double at(int) const;
+  double& at(int);
   double GetEuclideanNorm() const;
   EuclideanVector CreateUnitVector() const;
 
