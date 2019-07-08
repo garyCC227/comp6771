@@ -56,27 +56,105 @@ class EuclideanVector {
   EuclideanVector CreateUnitVector() const;
 
   // friend operator functions
-  friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);
-  friend bool operator==(const EuclideanVector&, const EuclideanVector&);
-  friend bool operator!=(const EuclideanVector&, const EuclideanVector&);
-  friend EuclideanVector operator+(const EuclideanVector&, const EuclideanVector&);
-  friend EuclideanVector operator-(const EuclideanVector&, const EuclideanVector&);
-  friend double operator*(const EuclideanVector&, const EuclideanVector&);  // dot product
-  friend EuclideanVector operator*(const EuclideanVector&, double);         // scalar multiplication
-  friend EuclideanVector operator/(const EuclideanVector&, double);         // scalar division
+  friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v) {
+    os << '[';
+
+    for (int i = 0; i < v.dimension_; ++i) {
+      os << v.magnitudes_[i];
+      if (i != (v.dimension_ - 1)) {
+        os << ' ';
+      }
+    }
+
+    os << ']';
+
+    return os;
+  }
+
+  //== operator
+  friend bool operator==(const EuclideanVector& v1, const EuclideanVector& v2) {
+    if (v1.dimension_ != v2.dimension_) {
+      return false;
+    }
+
+    for (int i = 0; i < v1.dimension_; ++i) {
+      if (v1.magnitudes_[i] != v2.magnitudes_[i])
+        return false;
+    }
+
+    return true;
+  }
+
+  // != operator
+  friend bool operator!=(const EuclideanVector& v1, const EuclideanVector& v2) {
+    return !(v1 == v2);
+  }
+
+  //+ operator
+  friend EuclideanVector operator+(const EuclideanVector& v1, const EuclideanVector& v2) {
+    if (v1.dimension_ != v2.dimension_) {
+      std::stringstream err;
+      err << "Dimensions of LHS(" << v1.GetNumDimensions() << ") and RHS(" << v2.GetNumDimensions()
+          << ") do not match";
+      throw EuclideanVectorError{err.str()};
+    }
+
+    EuclideanVector result{v1};
+    result += v2;
+
+    return result;
+  }
+
+  // - operator
+  friend EuclideanVector operator-(const EuclideanVector& v1, const EuclideanVector& v2) {
+    if (v1.dimension_ != v2.dimension_) {
+      std::stringstream err;
+      err << "Dimensions of LHS(" << v1.GetNumDimensions() << ") and RHS(" << v2.GetNumDimensions()
+          << ") do not match";
+      throw EuclideanVectorError{err.str()};
+    }
+
+    EuclideanVector result{v1};
+    result -= v2;
+
+    return result;
+  }
+
+  // * operator dot product
+  friend double operator*(const EuclideanVector& v1, const EuclideanVector& v2) {
+    if (v1.dimension_ != v2.dimension_) {
+      std::stringstream err;
+      err << "Dimensions of LHS(" << v1.GetNumDimensions() << ") and RHS(" << v2.GetNumDimensions()
+          << ") do not match";
+      throw EuclideanVectorError{err.str()};
+    }
+
+    double dot_product = 0;
+    for (int i = 0; i < v1.dimension_; ++i) {
+      dot_product += (v1.magnitudes_[i] * v2.magnitudes_[i]);
+    }
+    return dot_product;
+  }
+
+  // operator *, scalar multiplication
+  friend EuclideanVector operator*(const EuclideanVector& v1, double i) {
+    EuclideanVector result{v1};
+    return (result *= i);
+  }
+
+  // operator / : scalar division
+  friend EuclideanVector operator/(const EuclideanVector& v1, double i) {
+    if (i == 0) {
+      throw EuclideanVectorError{"Invalid vector division by 0"};
+    }
+
+    EuclideanVector result{v1};
+    return (result /= i);
+  }
 
  private:
   int dimension_;
   std::unique_ptr<double[]> magnitudes_;
 };
-
-std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);
-bool operator==(const EuclideanVector&, const EuclideanVector&);
-bool operator!=(const EuclideanVector&, const EuclideanVector&);
-EuclideanVector operator+(const EuclideanVector&, const EuclideanVector&);
-EuclideanVector operator-(const EuclideanVector&, const EuclideanVector&);
-double operator*(const EuclideanVector&, const EuclideanVector&);  // dot product
-EuclideanVector operator*(const EuclideanVector&, double);         // scalar multiplication
-EuclideanVector operator/(const EuclideanVector&, double);         // scalar division
 
 #endif  // ASSIGNMENTS_EV_EUCLIDEAN_VECTOR_H_
