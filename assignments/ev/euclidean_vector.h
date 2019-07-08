@@ -70,4 +70,13 @@ class EuclideanVector {
   std::unique_ptr<double[]> magnitudes_;
 };
 
+std::ostream& operator<<(std::ostream& os, const EuclideanVector& v);
+bool operator==(const EuclideanVector&, const EuclideanVector&);
+bool operator!=(const EuclideanVector&, const EuclideanVector&);
+EuclideanVector operator+(const EuclideanVector&, const EuclideanVector&);
+EuclideanVector operator-(const EuclideanVector&, const EuclideanVector&);
+double operator*(const EuclideanVector&, const EuclideanVector&);  // dot product
+EuclideanVector operator*(const EuclideanVector&, double);         // scalar multiplication
+EuclideanVector operator/(const EuclideanVector&, double);         // scalar division
+
 #endif  // ASSIGNMENTS_EV_EUCLIDEAN_VECTOR_H_
