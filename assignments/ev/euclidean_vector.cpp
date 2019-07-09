@@ -3,19 +3,19 @@
 #include <algorithm>  // Look at these - they are helpful https://en.cppreference.com/w/cpp/algorithm
 #include <iostream>
 
-EuclideanVector::EuclideanVector(int i)
+EuclideanVector::EuclideanVector(int i) noexcept
   : dimension_{i}, magnitudes_{std::make_unique<double[]>(i)} {
   //    std::cout << "default constructor\n";
 }
 
-EuclideanVector::EuclideanVector(int i, double magnitude)
+EuclideanVector::EuclideanVector(int i, double magnitude) noexcept
   : dimension_{i}, magnitudes_{std::make_unique<double[]>(i)} {
   for (int j = 0; j < i; j++) {
     magnitudes_[j] = magnitude;
   }
 }
 EuclideanVector::EuclideanVector(std::vector<double>::const_iterator begin,
-                                 std::vector<double>::const_iterator end) {
+                                 std::vector<double>::const_iterator end) noexcept {
   // initialize dimension
   dimension_ = end - begin;
   magnitudes_ = std::make_unique<double[]>(dimension_);
@@ -27,7 +27,7 @@ EuclideanVector::EuclideanVector(std::vector<double>::const_iterator begin,
   }
 }
 
-EuclideanVector::EuclideanVector(const EuclideanVector& old)
+EuclideanVector::EuclideanVector(const EuclideanVector& old) noexcept
   : dimension_{old.dimension_}, magnitudes_{std::make_unique<double[]>(dimension_)} {
   //    std::cout << "copy constructor there\n";
   // copy the content of old
@@ -42,7 +42,7 @@ EuclideanVector::EuclideanVector(EuclideanVector&& old) noexcept
   old.dimension_ = 0;
   old.magnitudes_ = std::make_unique<double[]>(0);
 }
-EuclideanVector& EuclideanVector::operator=(const EuclideanVector& old) {
+EuclideanVector& EuclideanVector::operator=(const EuclideanVector& old) noexcept {
   //    std::cout << "copy assignment there\n";
   // avoid self assignment
   if (&old != this) {
@@ -72,17 +72,17 @@ EuclideanVector& EuclideanVector::operator=(EuclideanVector&& old) noexcept {
   return *this;
 }
 
-double EuclideanVector::operator[](int i) const {
+double EuclideanVector::operator[](int i) const noexcept {
   assert(i >= 0 && i < dimension_);  // check valid index
   return this->magnitudes_[i];
 }
 
-double& EuclideanVector::operator[](int i) {
+double& EuclideanVector::operator[](int i) noexcept {
   assert(i >= 0 && i < dimension_);  // check valid index
   return this->magnitudes_[i];
 }
 
-int EuclideanVector::GetNumDimensions() const {
+int EuclideanVector::GetNumDimensions() const noexcept {
   return dimension_;
 }
 
@@ -134,7 +134,7 @@ EuclideanVector& EuclideanVector::operator/=(double b) {
 
   return *this;
 }
-EuclideanVector::operator std::vector<double>() const {
+EuclideanVector::operator std::vector<double>() const noexcept {
   std::vector<double> vec;
 
   for (int i = 0; i < dimension_; ++i) {
@@ -144,7 +144,7 @@ EuclideanVector::operator std::vector<double>() const {
   return vec;
 }
 
-EuclideanVector::operator std::list<double>() const {
+EuclideanVector::operator std::list<double>() const noexcept {
   std::list<double> l;
 
   for (int i = 0; i < dimension_; ++i) {

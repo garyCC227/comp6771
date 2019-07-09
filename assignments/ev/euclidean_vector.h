@@ -23,40 +23,41 @@ class EuclideanVectorError : public std::exception {
 class EuclideanVector {
  public:
   // constructor
-  explicit EuclideanVector(int i = 1);
-  EuclideanVector(int, double);
-  EuclideanVector(std::vector<double>::const_iterator, std::vector<double>::const_iterator);
+  explicit EuclideanVector(int i = 1) noexcept;
+  EuclideanVector(int, double) noexcept;
+  EuclideanVector(std::vector<double>::const_iterator,
+                  std::vector<double>::const_iterator) noexcept;
 
   // copy and move constructor and assignment
-  EuclideanVector(const EuclideanVector&);
+  EuclideanVector(const EuclideanVector&) noexcept;
   EuclideanVector(EuclideanVector&&) noexcept;
-  EuclideanVector& operator=(const EuclideanVector&);
+  EuclideanVector& operator=(const EuclideanVector&) noexcept;
   EuclideanVector& operator=(EuclideanVector&&) noexcept;
 
   // destructor
   ~EuclideanVector() = default;
 
   // member operator functions
-  double operator[](int i) const;  // [] getter
-  double& operator[](int i);       // [] modifier
+  double operator[](int i) const noexcept;  // [] getter
+  double& operator[](int i) noexcept;       // [] modifier
   EuclideanVector& operator+=(const EuclideanVector&);
   EuclideanVector& operator-=(const EuclideanVector&);
   EuclideanVector& operator*=(double);
   EuclideanVector& operator/=(double);
 
   // type conversion operator
-  explicit operator std::vector<double>() const;
-  explicit operator std::list<double>() const;
+  explicit operator std::vector<double>() const noexcept;
+  explicit operator std::list<double>() const noexcept;
 
   // methods
-  int GetNumDimensions() const;
+  int GetNumDimensions() const noexcept;
   double at(int) const;
   double& at(int);
   double GetEuclideanNorm() const;
   EuclideanVector CreateUnitVector() const;
 
   // friend operator functions
-  friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v) {
+  friend std::ostream& operator<<(std::ostream& os, const EuclideanVector& v) noexcept {
     os << '[';
 
     for (int i = 0; i < v.dimension_; ++i) {
@@ -72,7 +73,7 @@ class EuclideanVector {
   }
 
   //== operator
-  friend bool operator==(const EuclideanVector& v1, const EuclideanVector& v2) {
+  friend bool operator==(const EuclideanVector& v1, const EuclideanVector& v2) noexcept {
     if (v1.dimension_ != v2.dimension_) {
       return false;
     }
@@ -86,7 +87,7 @@ class EuclideanVector {
   }
 
   // != operator
-  friend bool operator!=(const EuclideanVector& v1, const EuclideanVector& v2) {
+  friend bool operator!=(const EuclideanVector& v1, const EuclideanVector& v2) noexcept {
     return !(v1 == v2);
   }
 
@@ -137,7 +138,7 @@ class EuclideanVector {
   }
 
   // operator *, scalar multiplication
-  friend EuclideanVector operator*(const EuclideanVector& v1, double i) {
+  friend EuclideanVector operator*(const EuclideanVector& v1, double i) noexcept {
     EuclideanVector result{v1};
     return (result *= i);
   }
